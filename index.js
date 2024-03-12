@@ -32,6 +32,7 @@ export const lrJS = `
       if (!token) {
         token = event.data;
       } else if (token !== event.data) {
+        es.close();
         location.reload();
       }
     })
