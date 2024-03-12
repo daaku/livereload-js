@@ -7,7 +7,6 @@
   "license": "MIT",
   "type": "module",
   "module": "./index.js",
-  "keywords": [
-    "livereload"
-  ]
+  "types": "./index.d.ts",
+  "keywords": ["livereload"]
 }

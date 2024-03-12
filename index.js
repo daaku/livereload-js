@@ -2,10 +2,17 @@
 const token = '__liveReloadToken__'
 globalThis[token] = Date.now()
 
-// This JS should included on the webpages that need livereload. Including it
-// will automatically setup the necessary functionality. Make sure to setup the
-// corresponding liveReloadHandler at /livereload.
-export const liveReloadJS = `
+/**
+ * Path the handler must be mounted at.
+ */
+export const lrPath = '/livereload'
+
+/**
+ * This JS should included on the webpages that need livereload. Including it
+ * will automatically setup the necessary functionality. Make sure to setup the
+ * corresponding liveReloadHandler at /livereload.
+ */
+export const lrJS = `
 (() => {
   let token;
   let att = 0;
@@ -15,7 +22,7 @@ export const liveReloadJS = `
     pending = setTimeout(monitor, Math.min(50 * Math.pow(1.05, att++), 5000));
   };
   const monitor = () => {
-    const es = new EventSource('/livereload');
+    const es = new EventSource('${lrPath}');
     es.addEventListener('token', ev => {
       if (!token) {
         token = event.data;
@@ -32,9 +39,11 @@ export const liveReloadJS = `
 })();
 `
 
-// This handler should be mounted to the /livereload path. Ensure you include
-// the corresponding JS in the HTML response.
-export const liveReloadHandler = req => {
+/**
+ * This handler should be mounted to the /livereload path. Ensure you include
+ * the corresponding JS in the HTML response.
+ */
+export const lrHandler = req => {
   return new Response(
     new ReadableStream({
       start(controller) {
