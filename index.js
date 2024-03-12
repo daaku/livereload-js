@@ -2,6 +2,11 @@
 const token = '__liveReloadToken__'
 globalThis[token] = Date.now()
 
+// this setup is to allow instant triggers when we are reloaded.
+const active = '__liveReloadActive__'
+globalThis[active]?.forEach(h => h())
+globalThis[active] ??= new Set()
+
 /**
  * Path the handler must be mounted at.
  */
@@ -47,10 +52,12 @@ export const lrHandler = req => {
   return new Response(
     new ReadableStream({
       start(controller) {
-        const interval = setInterval(() => {
+        const handler = () =>
           controller.enqueue(`event: token\ndata: ${globalThis[token]}\n\n`)
-        }, 1000)
+        globalThis[active].add(handler)
+        const interval = setInterval(handler, 1000)
         req.signal.onabort = () => {
+          globalThis[active].delete(handler)
           clearInterval(interval)
           controller.close()
         }
