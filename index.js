@@ -1,7 +1,6 @@
 // this setup makes it compatible with --hot reloading used in Bun.
 const token = '__liveReloadToken__'
 globalThis[token] = Date.now()
-globalThis[token]++
 
 // This JS should included on the webpages that need livereload. Including it
 // will automatically setup the necessary functionality. Make sure to setup the
