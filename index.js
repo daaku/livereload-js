@@ -55,11 +55,10 @@ export const lrHandler = req => {
       start(controller) {
         const handler = () =>
           controller.enqueue(`event: token\ndata: ${globalThis[token]}\n\n`)
+        handler() // trigger immediately
         globalThis[active].add(handler)
-        const interval = setInterval(handler, 1000)
         req.signal.onabort = () => {
           globalThis[active].delete(handler)
-          clearInterval(interval)
           controller.close()
         }
       },
