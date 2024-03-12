@@ -1,0 +1,11 @@
+{
+  "name": "@daaku/livereload",
+  "author": "Naitik Shah <n@daaku.org>",
+  "version": "0.1.0",
+  "description": "Live Reload using Server Sent Events.",
+  "repository": "git@github.com:daaku/livereload-js",
+  "license": "MIT",
+  "type": "module",
+  "module": "./index.js",
+  "keywords": ["livereload"]
+}
