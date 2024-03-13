@@ -28,6 +28,7 @@ export const lrJS = `
   };
   const monitor = () => {
     const es = new EventSource('${lrPath}');
+    window.addEventListener('beforeunload', () => es.close());
     es.addEventListener('token', ev => {
       if (!token) {
         token = event.data;
